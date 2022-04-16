@@ -1,0 +1,143 @@
+.profile {
+    text-align: center;
+}
+
+.profile__container {
+    margin: 74px auto 70px;
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .profile__container {
+        margin: 236px auto 269px;
+    }
+}
+
+@media (max-width: 320px) {
+    .profile__container {
+        margin: 70px auto 40px;
+    }
+}
+
+.profile__header {
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 29px;
+    color: #000000;
+    margin: 0px auto 123px;
+}
+
+@media (max-width: 768px) {
+    .profile__header {
+        margin-bottom: 96px;
+    }
+}
+
+@media (max-width: 320px) {
+    .profile__header {
+        margin-bottom: 96px;
+    }
+}
+
+.profile__form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.profile__input {
+    border: 1px solid rgba(232, 232, 232, 1);
+    border-style: none none solid none;
+    position: relative;
+}
+
+.profile__input:last-child {
+    border: none;
+    margin-bottom: 220px;
+}
+
+@media (max-width: 768px) {
+    .profile__input:last-child {
+        margin-bottom: 210px;
+    }
+}
+
+@media (max-width: 400px) {
+    .profile__input:last-child {
+        margin-bottom: 379px;
+    }
+}
+
+.profile__text {
+    border: none;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 13px;
+    text-align: right;
+    color: #000000;
+    width: 410px;
+    padding: 17px 0 16px;
+    position: relative;
+    background-color: transparent;
+    z-index: 2;
+}
+
+@media (max-width: 400px) {
+    .profile__text {
+        width: 260px;
+    }
+}
+
+.profile__placeholder {
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 13px;
+    color: #000000;
+    position: absolute;
+    top: 17px;
+    left: 0;
+    z-index: 1;
+}
+
+.profile__button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.profile__edit {
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 16px;
+    color: #000000;
+    border: none;
+    background: none;
+    cursor: pointer;
+    margin-bottom: 16px;
+}
+
+@media (max-width: 320px) {
+    .profile__edit {
+        font-size: 12px;
+        line-height: 15px;
+    }
+}
+
+.profile__exit {
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 16px;
+    color: #FF4062;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+@media (max-width: 320px) {
+    .profile__exit {
+        font-size: 12px;
+        line-height: 15px;
+    }
+}
