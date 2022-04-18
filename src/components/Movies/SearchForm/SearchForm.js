@@ -8,10 +8,10 @@ function SearchForm() {
         <div className="form">
             <Header location={"/movies"} />
             <div className="form__container">
-                <input className="form__input" placeholder='Фильм' />
+                <input className="form__input" placeholder='Фильм' required />
                 <button className='form__button'>Найти</button>
                 <label className="checkbox">
-                    <input type="checkbox" className="checkbox-input" checked />
+                    <input type="checkbox" className="checkbox-input"  />
                     <span className="checkbox-switch"></span>
                     <span className="checkbox-text">Короткометражки</span>
                 </label>

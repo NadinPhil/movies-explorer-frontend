@@ -67,6 +67,7 @@
 .header__button_signin {
   background: #000000;
   border-radius: 3px;
+  border: none;
   color: #FFFFFF;
   text-align: center;
   padding: 8px 20px;

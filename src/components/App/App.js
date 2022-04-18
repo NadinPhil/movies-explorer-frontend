@@ -23,7 +23,6 @@ function App() {
           <Route exact path="/sign-in" element={<Login />} />
           <Route exact path="*" element={<PageNotFound />} />
         </Routes>
-
       </div>
     </div>
   );

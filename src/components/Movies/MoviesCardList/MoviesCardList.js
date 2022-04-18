@@ -23,7 +23,7 @@ const MoviesCardList = () => {
     return (
         <section className="movies-cards">
             <ul className="movies-list">
-               {size > 768 &&
+               {size > 880 &&
                (initialMovies.slice(0,12).map(movie => {
                     return (
                         <MoviesCard
@@ -36,7 +36,7 @@ const MoviesCardList = () => {
                     )
                 }))}
                 
-                { size > 600 && size <= 768 && (
+                { size > 600 && size <= 880 && (
                 initialMovies.slice(0,8).map(movie => {
                     return (
                         <MoviesCard
