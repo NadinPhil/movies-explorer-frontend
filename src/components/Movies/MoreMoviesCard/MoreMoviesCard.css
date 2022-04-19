@@ -1,0 +1,26 @@
+.more-movies {
+    margin-top: 50px;
+    padding-bottom: 80px;
+    text-align: center;
+}
+
+.more-movies__button {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    color: #000000;
+    width: 320px;
+    padding: 11px 0 9px;
+    background: #FFFFFF;
+    border: 1px solid rgba(232, 232, 232, 1);
+    cursor: pointer;
+}
+
+@media (max-width: 400px) {
+    .more-movies__button {
+        width: 200px;
+    }
+}
+.more-movies__container{
+    height: 10px;
+}

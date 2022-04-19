@@ -1,0 +1,41 @@
+.movies-cards {
+    margin: 70px 70px 0px 70px;
+}
+
+@media (max-width: 768px) {
+    .movies-cards {
+        margin: 70px 30px 0px 30px;
+    }
+}
+
+@media (max-width: 600px) {
+    .movies-cards {
+        margin: 40px 10px 0px 10px;
+    }
+}
+
+.movies-list {
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    gap: 30px 24px;
+    margin: 0;
+    padding-bottom: 30px;
+}
+
+@media (max-width: 880px) {
+    .movies-list {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(4, 1fr);
+        gap: 36px 30px;
+    }
+}
+
+@media (max-width: 600px) {
+    .movies-list {
+        grid-template-columns: repeat(1, 1fr);
+        grid-template-rows: repeat(5, 1fr);
+        gap: 16px;
+    }
+}
