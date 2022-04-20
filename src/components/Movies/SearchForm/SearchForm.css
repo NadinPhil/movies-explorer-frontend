@@ -141,7 +141,7 @@
     opacity: 0;
 }
 
-.checkbox-input:checked+.checkbox-switch:before {
+.checkbox-input_checked+.checkbox-switch:before {
     transform: translateX(15px);
     background: #2BE080;
 }
@@ -159,4 +159,12 @@
         font-size: 11px;
         margin-left: 13px;
     }
+}
+
+.error {
+    font-family: 'Inter';
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 12px;
+    color: #FF4062;
 }

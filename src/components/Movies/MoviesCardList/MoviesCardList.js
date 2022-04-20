@@ -4,65 +4,68 @@ import './MoviesCardList.css'
 import MoviesCard from '../MoviesCard/MoviesCard';
 import { useState, useEffect } from "react";
 
-const MoviesCardList = () => {
+const MoviesCardList = (props) => {
 
     const size = useWindowSize();
 
     function useWindowSize() {
         const [windowSize, setWindowSize] = useState(undefined);
         useEffect(() => {
-          function handleResize() {
-            setWindowSize(window.innerWidth);
-          }
-          window.addEventListener("resize", handleResize);
-          handleResize();
-          return () => window.removeEventListener("resize", handleResize);
-        }, []); 
+            function handleResize() {
+                setWindowSize(window.innerWidth);
+            }
+            window.addEventListener("resize", handleResize);
+            handleResize();
+            return () => window.removeEventListener("resize", handleResize);
+        }, []);
         return windowSize;
     }
+   
     return (
         <section className="movies-cards">
             <ul className="movies-list">
-               {size > 880 &&
-               (initialMovies.slice(0,12).map(movie => {
-                    return (
-                        <MoviesCard
-                            movieName={movie.name}
-                            movieLink={movie.link.img}
-                            movieTime={movie.time}
+                {size > 880 &&
+                    (props.cards.slice(0, 12).map(movie => {
+                        return (
+                            <MoviesCard
+                                key={movie.id}
+                                movieName={movie.nameRU}
+                                movieLink={movie.image.url}
+                                movieTime={movie.duration}
+                                movie={movie}
+                                movieVideo={movie.trailerLink}
+                            />
+                        )
+                    }))}
+
+                {size > 600 && size <= 880 && (
+                    props.cards.slice(0, 8).map(movie => {
+                        return (
+                            <MoviesCard
+                            key={movie.id}
+                            movieName={movie.nameRU}
+                            movieLink={movie.image.url}
+                            movieTime={movie.duration}
                             movie={movie}
-                            movieLiked={movie.like}
-                        />
-                    )
-                }))}
-                
-                { size > 600 && size <= 880 && (
-                initialMovies.slice(0,8).map(movie => {
-                    return (
-                        <MoviesCard
-                            movieName={movie.name}
-                            movieLink={movie.link.img}
-                            movieTime={movie.time}
+                            />
+                        )
+                    })
+                )}
+                {size <= 600 && (
+                    props.cards.slice(0, 5).map(movie => {
+                        return (
+                            <MoviesCard
+                            key={movie.id}
+                            movieName={movie.nameRU}
+                            movieLink={movie.image.url}
+                            movieTime={movie.duration}
                             movie={movie}
-                            movieLiked={movie.like}
-                        />
-                    )
-                })
-            )}
-            { size <= 600  && (
-                initialMovies.slice(0,5).map(movie => {
-                    return (
-                        <MoviesCard
-                            movieName={movie.name}
-                            movieLink={movie.link.img}
-                            movieTime={movie.time}
-                            movie={movie}
-                            movieLiked={movie.like}
-                        />
-                    )
-                })
-            )}
+                            />
+                        )
+                    })
+                )}
             </ul>
+            
         </section>
     )
 };

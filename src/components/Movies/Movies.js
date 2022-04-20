@@ -5,13 +5,20 @@ import './Movies.css';
 import Footer from '../Footer/Footer';
 import MoreMoviesCard from './MoreMoviesCard/MoreMoviesCard';
 
-function Movies() {
+function Movies(props) {
+
     return (
         <>
             <section className="movies">
-                <SearchForm />
-                <MoviesCardList />
-                <MoreMoviesCard location={"/movies" }/>
+                <SearchForm
+                onSubmit={props.onSubmit}
+                    onChange={props.onChange}
+                    error={props.error}
+                    form={props.form}
+                    checkbox={props.checkbox}
+                    onInputClick={props.onInputClick} />
+                <MoviesCardList cards={props.cards} />
+                <MoreMoviesCard location={"/movies"} />
                 <Footer />
             </section>
         </>
