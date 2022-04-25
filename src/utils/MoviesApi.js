@@ -24,13 +24,12 @@ class Api {
     
 } 
 
-const api = new Api({ 
+const apiMovies = new Api({ 
     url: 'https://api.nomoreparties.co', 
     headers: { 
-        //authorization: `Bearer ${token}`, 
         "content-type": "application/json",
       } 
 
 }); 
 
-export default api; 
+export default apiMovies; 

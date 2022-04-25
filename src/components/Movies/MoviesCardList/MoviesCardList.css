@@ -1,7 +1,17 @@
 .movies-cards {
     margin: 70px 70px 0px 70px;
 }
-
+.movies-cards__error{
+    display: none;
+}
+.movies-cards__error_active{
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+    color: #000000;
+    text-align: center;
+    display: block;
+}
 @media (max-width: 768px) {
     .movies-cards {
         margin: 70px 30px 0px 30px;
@@ -39,3 +49,4 @@
         gap: 16px;
     }
 }
+

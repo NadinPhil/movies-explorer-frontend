@@ -3,11 +3,12 @@ import './MoreMoviesCard.css'
 
 
 const MoreMoviesCard = (props) => {
+    const moreMovies = `more-movies${props.loadMore ? '_active' : ''}`
     return (
         <>
         { props.location === "/movies" && (
-        <section className="more-movies">
-            <button className="more-movies__button">Еще</button>
+        <section className={moreMovies}>
+            <button className="more-movies__button" onClick={props.onClick}>Еще</button>
         </section>
         )
         }

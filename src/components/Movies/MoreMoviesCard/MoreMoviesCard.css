@@ -3,6 +3,9 @@
     padding-bottom: 80px;
     text-align: center;
 }
+.more-movies_active {
+    display: none;
+}
 
 .more-movies__button {
     font-weight: 500;

@@ -1,17 +1,29 @@
 import React from 'react';
-import SearchForm from '../Movies/SearchForm/SearchForm';
+import SearchForm from '../SavedMovies/SearchForm/SearchForm';
 import MoviesCardList from '../Movies/MoviesCardList/MoviesCardList';
 import './SavedMovies.css';
-import MoreMoviesCard from '../Movies/MoreMoviesCard/MoreMoviesCard';
 import Footer from '../Footer/Footer';
 
-function SavedMovies() {
+function SavedMovies(props) {
     return (
         <>
             <section className="movies">
-                <SearchForm />
-                <MoviesCardList />
-                <MoreMoviesCard location={"/saved-movies" } />
+                <SearchForm
+                    form={props.form}
+                    checkbox={props.checkbox}
+                    onChange={props.onChange}
+                    onInputClick={props.onInputClick}
+                    onSubmit={props.onSubmit}
+                    error={props.error}
+                />
+                <MoviesCardList
+                    location={"/saved-movies"}
+                    cards={props.cards}
+                    error={props.error}
+                    limit={props.limit}
+                    onDeleteClick={props.onDeleteClick}
+                    load={props.load}
+                />
                 <Footer />
             </section>
         </>
