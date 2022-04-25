@@ -19,6 +19,7 @@ const MoviesCardList = (props) => {
                                 key={movie.id}
                                 movieName={movie.nameRU}
                                 movieLink={movie.image.url}
+                                movieImg={movie.image}
                                 movieTime={movie.duration}
                                 movie={movie}
                                 movieVideo={movie.trailerLink}
