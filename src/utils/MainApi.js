@@ -133,8 +133,7 @@ class Api {
 }
 
 const api = new Api({
-    //url: 'https://api.films.nomoredomains.xyz',
-    url: 'http://localhost:3000',
+    url: 'https://api.films.nomoredomains.xyz',
     headers: {
         "content-type": "application/json",
     }
