@@ -98,7 +98,13 @@ function App() {
     localStorage.removeItem('liked');
     localStorage.removeItem('saved');
     localStorage.removeItem('cards');
+    setCards([]);
+    setForm('');
+    setСhecked(false);
+    setSavedCards([]);
     setLoggedIn(false);
+    setFormSaved('');
+    setСheckedSaved(false);
     navigate('/')
   }
 
