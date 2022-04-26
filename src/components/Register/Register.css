@@ -176,3 +176,15 @@
     line-height: 12px;
     color: #FF4062;
 }
+
+.register__info{
+    display: none;
+}
+
+.register__info_active{
+    font-family: 'Inter';
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    color: #FF4062;
+}

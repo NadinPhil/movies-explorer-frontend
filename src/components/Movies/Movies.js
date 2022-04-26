@@ -16,7 +16,8 @@ function Movies(props) {
                     error={props.error}
                     form={props.form}
                     checkbox={props.checkbox}
-                    onInputClick={props.onInputClick} />
+                    onInputClick={props.onInputClick}
+                    errorInput={props.errorInput} />
                 <MoviesCardList
                     liked={props.liked}
                     onLikedClick={props.onLikedClick}

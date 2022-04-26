@@ -122,10 +122,13 @@ class Api {
     }
 
     //получение списка сохраненных фильмов в виде массива 
-    getAllSavedMovies() {
-        return fetch(`${this._url}//movies`, {
+    getAllSavedMovies(token) {
+        return fetch(`${this._url}/movies`, {
             method: "GET",
-            headers: this._headers,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
         })
             .then(this._checkResponse)
     }
@@ -134,6 +137,7 @@ class Api {
 
 const api = new Api({
     url: 'https://api.films.nomoredomains.xyz',
+    //url: 'http://localhost:3000',
     headers: {
         "content-type": "application/json",
     }

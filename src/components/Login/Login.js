@@ -12,6 +12,7 @@ function Login(props) {
     const [passwordError, setPasswordError] = useState('Поле Пароль не может быть пустым!');
     const [isValid, setIsValid] = useState(false);
     const activeButtonClassName = `login__link${isValid ? '_active' : ''}`
+    const activeInfoClassName = `login__info${props.infoTooltipOpen ? '_active' : ''}`
 
     useEffect(() => {
         if (emailError || passwordError) {
@@ -98,7 +99,7 @@ function Login(props) {
                         onBlur={handleBlur}
                     />
                     {(passwordDirty && passwordError) && <div className='error'>{passwordError}</div>}
-
+                    {!props.onInfoTooltip && (<p className={activeInfoClassName}>Что-то пошло не так! Попробуйте ещё раз.</p>)}
                     <div className="login__button-container">
                         <button
                             type="submit"

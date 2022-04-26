@@ -171,3 +171,15 @@
     color: #000000;
     text-decoration: none;
 }
+
+.login__info{
+    display: none;
+}
+
+.login__info_active{
+    font-family: 'Inter';
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    color: #FF4062;
+}

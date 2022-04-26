@@ -7,6 +7,7 @@ function Profile(props) {
     const currentUser = React.useContext(CurrentUserContext);
     const [name, setName] = React.useState(currentUser.name); 
     const [email, setEmail] = React.useState(currentUser.email); 
+    const activeInfoClassName = `profile__info${props.infoTooltipOpen ? '_active' : ''}`
   
     function handleChangeName(e) { 
       setName(e.target.value); 
@@ -44,6 +45,7 @@ function Profile(props) {
                         <input className="profile__text" value={`${email}`} onChange={handleChangeEmail} />
                     </div>
                 </div>
+                {!props.onInfoTooltip && (<p className={activeInfoClassName}>Что-то пошло не так! Попробуйте ещё раз.</p>)}
                 <div className="profile__button">
                     <button className='profile__edit' onClick={handleSubmit}>Редактировать</button>
                     <button className='profile__exit' onClick={props.onLogout}>Выйти из аккаунта</button>

@@ -1,5 +1,5 @@
 import React from 'react';
-import SearchForm from '../SavedMovies/SearchForm/SearchForm';
+import SearchForm from '../Movies/SearchForm/SearchForm';
 import MoviesCardList from '../Movies/MoviesCardList/MoviesCardList';
 import './SavedMovies.css';
 import Footer from '../Footer/Footer';
@@ -14,7 +14,7 @@ function SavedMovies(props) {
                     onChange={props.onChange}
                     onInputClick={props.onInputClick}
                     onSubmit={props.onSubmit}
-                    error={props.error}
+                    errorInput={props.errorInput}
                 />
                 <MoviesCardList
                     location={"/saved-movies"}

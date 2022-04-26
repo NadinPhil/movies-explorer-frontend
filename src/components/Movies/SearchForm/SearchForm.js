@@ -11,7 +11,7 @@ function SearchForm(props) {
             <div className="form__container"  >
                 <form onSubmit={props.onSubmit}>
                 <input onChange={props.onChange} value={props.form} className="form__input" placeholder='Фильм' name="film" type="text" id="film" required/>
-                <span id="film-error" className="error">{props.error}</span>
+                <div id="film-error" className="error__input">{props.errorInput}</div>
                 <button className='form__button' >Найти</button>
                 </form>
                 <label className="checkbox">

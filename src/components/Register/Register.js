@@ -16,7 +16,8 @@ function Register(props) {
     const [passwordError, setPasswordError] = useState('Поле Пароль не может быть пустым!');
     const [isValid, setIsValid] = useState(false);
     const activeButtonClassName = `register__link${isValid ? '_active' : ''}`
-
+    const activeInfoClassName = `register__info${props.infoTooltipOpen ? '_active' : ''}`
+    
     useEffect(() => {
         if (nameError || emailError || passwordError) {
             setIsValid(false)
@@ -127,6 +128,13 @@ function Register(props) {
                         onBlur={e => handleBlur(e)}
                     />
                     {(passwordDirty && passwordError) && <div className='error'>{passwordError}</div>}
+                    {props.onInfoTooltip
+                        ? (
+                            <p className={activeInfoClassName}>Вы успешно зарегистрировались!</p>
+                        )
+                        : (
+                            <p className={activeInfoClassName}>Что-то пошло не так! Попробуйте ещё раз.</p>
+                        )}
                     <div className="register__button-container">
                         <button
                             type="submit"

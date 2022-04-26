@@ -7,8 +7,8 @@ import Profile from '../Profile/Profile';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
 import PageNotFound from '../PageNotFound/PageNotFound';
-import { Route, Routes, useNavigate, } from 'react-router-dom';
-import ProtectedRoute from '../ProtectedRoute.js'; 
+import { Route, Routes, useNavigate } from 'react-router-dom';
+import ProtectedRoute from '../ProtectedRoute.js';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
 import apiMovies from '../../utils/MoviesApi.js';
 import api from '../../utils/MainApi.js';
@@ -18,6 +18,8 @@ function App() {
   const [cards, setCards] = React.useState([]);
   const [form, setForm] = React.useState('');
   const [error, setError] = React.useState(false);
+  const [errorInput, setInputError] = React.useState('');
+  const [errorInputSaved, setInputErrorSaved] = React.useState('');
   const [checked, setСhecked] = React.useState(false);
   const [shortMovie, setShortMovie] = React.useState([]);
   const [loadMore, setLoadMore] = useState(true);
@@ -31,10 +33,12 @@ function App() {
   const [formSaved, setFormSaved] = React.useState('');
   const [checkedSaved, setСheckedSaved] = React.useState(false);
   const [load, setLoad] = React.useState(false);
-
-    window.onload = function () {
-          setLoad(true)
-        }
+  const [infoTooltip, setInfoTooltip] = React.useState(false);
+  const [infoTooltipOpen, setInfoTooltipOpen] = React.useState(false);
+  
+  window.onload = function () {
+    setLoad(true)
+  }
 
   useEffect(() => {
     handleTokenCheck('/movies');
@@ -68,10 +72,15 @@ function App() {
           setLoggedIn(true);
           navigate("/movies");
           handleGetAllMovies();
-        } else console.log("Ошибка авторизации!")
+        } else {
+          setInfoTooltipOpen(true);
+          setInfoTooltip(false);
+        }
       })
       .catch((err) => {
         console.log(err);
+        setInfoTooltipOpen(true);
+        setInfoTooltip(false);
       });
   };
 
@@ -81,11 +90,20 @@ function App() {
       .register(data.name, data.email, data.password)
       .then((res) => {
         if (res) {
+          setInfoTooltipOpen(true);
+          setInfoTooltip(true);
           handleLogin(data);
-        } else console.log("Ошибка регистрации!")
+          setInfoTooltip(true);
+        } else {
+          console.log("Ошибка регистрации!");
+          setInfoTooltipOpen(true);
+          setInfoTooltip(false);
+        }
       })
       .catch((err) => {
         console.log(err);
+        setInfoTooltipOpen(true);
+        setInfoTooltip(false);
       });
   };
 
@@ -96,7 +114,6 @@ function App() {
     localStorage.removeItem('status');
     localStorage.removeItem('statusSaved');
     localStorage.removeItem('liked');
-    localStorage.removeItem('saved');
     localStorage.removeItem('cards');
     setCards([]);
     setForm('');
@@ -112,24 +129,20 @@ function App() {
   function handleUpdateUser(data) {
     api.editUserInfo(data, jwt)
       .then((dataUser) => {
-        setCurrentUser(dataUser)
+        if (dataUser) {
+          setInfoTooltipOpen(false);
+          setCurrentUser(dataUser);
+        } else {
+          setInfoTooltipOpen(true);
+          setInfoTooltip(false);
+        }
       })
-      .catch((err) => console.log(`Ошибка: ${err}`))
+      .catch((err) => {
+        console.log(`Ошибка: ${err}`);
+        setInfoTooltipOpen(true);
+        setInfoTooltip(false);
+      })
   }
-
-  //получаем данные пользователя
-  React.useEffect(() => {
-    if (loggedIn) {
-      api.getUserInfo(jwt)
-        .then((user) => {
-          console.log(user)
-          setCurrentUser(user)
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-    }
-  }, [loggedIn])
 
   //отслеживаем размер экрана 
   function useWindowSize() {
@@ -170,6 +183,11 @@ function App() {
   //меняем форму 
   const handleChange = (event) => {
     setForm(event.target.value);
+    if (!event.target.value) {
+      setInputError('Нужно ввести ключевое слово')
+    } else {
+      setInputError('')
+    }
   };
 
   //получаем все карточки
@@ -232,7 +250,7 @@ function App() {
       setCards(data.movies)
       setСhecked(data.checked)
       setForm(data.form)
-       const likedCard = JSON.parse(localStorage.getItem('liked'));
+      const likedCard = JSON.parse(localStorage.getItem('liked'));
       if (likedCard === null) {
         setCards(data.movies);
       } else setCards(likedCard);
@@ -250,46 +268,50 @@ function App() {
   //меняем форму сохраненных фильмов
   const handleChangeSaved = (event) => {
     setFormSaved(event.target.value);
-  };
-   
-    //сабмит формы поиска сoхраненных фильмов
-    function handleSubmitSavedMovies(event) {
-      event.preventDefault();
-      const movies = JSON.parse(localStorage.getItem('saved'))
-      const moviesFilter = movies.filter(card => card.nameRU.indexOf(formSaved) !== -1)
-      setSavedCards(moviesFilter)
-      localStorage.setItem('statusSaved', JSON.stringify({
-        'movies': moviesFilter,
-        'checked': checkedSaved,
-        'form': formSaved
-      }))
-      if (moviesFilter.length === 0) {
-        setError(true);
-      } else {
-        setError(false);
-      }
+    if (!event.target.value) {
+      setInputErrorSaved('Нужно ввести ключевое слово')
+    } else {
+      setInputError('')
     };
-  
-    React.useEffect(() => {
-      const data = JSON.parse(localStorage.getItem('statusSaved'));
-      if ( data === null) {
-        setSavedCards([])
-        setСheckedSaved(false)
-        setFormSaved('')
-      } else {
+  }
+
+  //сабмит формы поиска сoхраненных фильмов
+  function handleSubmitSavedMovies(event) {
+    event.preventDefault();
+    const moviesFilter = savedCards.filter(card => card.nameRU.indexOf(formSaved) !== -1)
+    setSavedCards(moviesFilter)
+    localStorage.setItem('statusSaved', JSON.stringify({
+      'movies': moviesFilter,
+      'checked': checkedSaved,
+      'form': formSaved
+    }))
+    if (moviesFilter.length === 0) {
+      setError(true);
+    } else {
+      setError(false);
+    }
+  };
+
+  React.useEffect(() => {
+    const data = JSON.parse(localStorage.getItem('statusSaved'));
+    if (data === null) {
+      setSavedCards([])
+      setСheckedSaved(false)
+      setFormSaved('')
+    } else {
       setSavedCards(data.movies)
       setСheckedSaved(data.checked)
       setFormSaved(data.form)
-      }
-    }, []);
-
-    React.useEffect(() => {
-      setShortSavedMovie(savedCards.filter(card => card.duration <= 40))
-    }, [savedCards, setСheckedSaved]);
-  
-    function handleСheckedClickSaved() {
-      setСheckedSaved((prev) => !prev)
     }
+  }, []);
+
+  React.useEffect(() => {
+    setShortSavedMovie(savedCards.filter(card => card.duration <= 40))
+  }, [savedCards, setСheckedSaved]);
+
+  function handleСheckedClickSaved() {
+    setСheckedSaved((prev) => !prev)
+  }
 
   // лайк/дизлайк + удаление/добавление фильма
   function handleAddMovie(id) {
@@ -311,8 +333,6 @@ function App() {
       api.removeMovie(savedMoviesFilter._id, jwt)
         .then(() => {
           setSavedCards((state) => state.filter((c) => c._id !== savedMoviesFilter._id));
-          localStorage.setItem('saved', JSON.stringify(savedCards.filter((c) => c._id !== savedMoviesFilter._id)));
-
         })
         .catch((err) => console.log(`Ошибка: ${err}`))
     } else {
@@ -323,7 +343,7 @@ function App() {
       );
       localStorage.setItem('liked', JSON.stringify(cards.map((card) =>
         card.id === id ? { ...card, liked: true } : card,
-      ))); 
+      )));
       localStorage.setItem('cards', JSON.stringify(movies.map((card) =>
         card.id === id ? { ...card, liked: true } : card,
       )));
@@ -331,7 +351,6 @@ function App() {
       api.addMovie(cardLiked, jwt)
         .then((newCard) => {
           setSavedCards([newCard, ...savedCards]);
-          localStorage.setItem('saved', JSON.stringify([newCard, ...savedCards]));
         })
         .catch((err) => console.log(`Ошибка: ${err}`))
     }
@@ -355,19 +374,38 @@ function App() {
     api.removeMovie(savedMoviesFilter._id, jwt)
       .then(() => {
         setSavedCards((state) => state.filter((c) => c._id !== savedMoviesFilter._id));
-        localStorage.setItem('saved', JSON.stringify(savedCards.filter((c) => c._id !== savedMoviesFilter._id)));
       })
       .catch((err) => console.log(`Ошибка: ${err}`))
   }
 
+  function handleLikedCards([user, cards]) {
+    const movies = JSON.parse(localStorage.getItem('cards'))
+          localStorage.setItem('cards', JSON.stringify(movies.map((movie) => {
+            if (cards.filter(card => card.owner === user._id).find((saved) => movie.id === saved.id)) {
+              return { ...movie, liked: true }
+            } else return movie
+          }
+          )));
+    }
+  
   React.useEffect(() => {
-    const data = JSON.parse(localStorage.getItem('saved'));
-    if (data === null) {
-      setSavedCards([]);
-    } else setSavedCards(data);
-
-  }, []);
-
+    if (loggedIn) {
+      Promise.all([
+        api.getUserInfo(jwt),
+        api.getAllSavedMovies(jwt)
+      ])
+        .then(([user, cards]) => {
+          console.log(user);
+          setCurrentUser(user);
+          setSavedCards(cards.filter(card => card.owner === user._id));
+          handleLikedCards([user, cards]);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+    }
+  }, [loggedIn])
+  
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -377,20 +415,22 @@ function App() {
             <Route exact path="/" element={<Main />} />
             <Route exact path="/movies" element={
               <ProtectedRoute loggedIn={loggedIn}>
-              <Movies
-                onChange={handleChange}
-                error={error}
-                form={form}
-                cards={checked ? shortMovie : cards}
-                onSubmit={handleSubmit}
-                checkbox={checked}
-                onInputClick={handleСheckedClick}
-                loadMore={loadMore}
-                onClick={addMoreMovies}
-                limit={limit}
-                onLikedClick={handleAddMovie}
-                load={load}
-              />
+                <Movies
+                  onChange={handleChange}
+                  error={error}
+                  form={form}
+                  cards={checked ? shortMovie : cards}
+                  onSubmit={handleSubmit}
+                  checkbox={checked}
+                  onInputClick={handleСheckedClick}
+                  loadMore={loadMore}
+                  onClick={addMoreMovies}
+                  limit={limit}
+                  onLikedClick={handleAddMovie}
+                  load={load}
+                  errorInput={errorInput}
+
+                />
               </ProtectedRoute>}
             />
             <Route exact path="/saved-movies" element={
@@ -405,11 +445,12 @@ function App() {
                 onSubmit={handleSubmitSavedMovies}
                 onDeleteClick={handleDeleteMovie}
                 load={load}
+                errorInput={errorInputSaved}
               />}
             />
-            <Route exact path="/profile" element={<Profile onLogout={handleLogout} onEditProfile={handleUpdateUser} />} />
-            <Route exact path="/sign-up" element={<Register onRegister={handleRegister} />} />
-            <Route exact path="/sign-in" element={<Login onLogin={handleLogin} />} />
+            <Route exact path="/profile" element={<Profile onLogout={handleLogout} onEditProfile={handleUpdateUser} onInfoTooltip={infoTooltip} infoTooltipOpen={infoTooltipOpen} />} />
+            <Route exact path="/sign-up" element={<Register onRegister={handleRegister} onInfoTooltip={infoTooltip} infoTooltipOpen={infoTooltipOpen} />} />
+            <Route exact path="/sign-in" element={<Login onLogin={handleLogin} onInfoTooltip={infoTooltip} infoTooltipOpen={infoTooltipOpen} />} />
             <Route exact path="*" element={<PageNotFound />} />
           </Routes>
         </div>
