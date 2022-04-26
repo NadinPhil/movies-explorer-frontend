@@ -35,7 +35,7 @@ function App() {
   const [load, setLoad] = React.useState(false);
   const [infoTooltip, setInfoTooltip] = React.useState(false);
   const [infoTooltipOpen, setInfoTooltipOpen] = React.useState(false);
-  
+
   window.onload = function () {
     setLoad(true)
   }
@@ -378,16 +378,17 @@ function App() {
       .catch((err) => console.log(`Ошибка: ${err}`))
   }
 
-  function handleLikedCards([user, cards]) {
+  function handleSearchLikedCards([user, cards]) {
     const movies = JSON.parse(localStorage.getItem('cards'))
-          localStorage.setItem('cards', JSON.stringify(movies.map((movie) => {
-            if (cards.filter(card => card.owner === user._id).find((saved) => movie.id === saved.id)) {
-              return { ...movie, liked: true }
-            } else return movie
-          }
-          )));
+    console.log(movies)
+    localStorage.setItem('cards', JSON.stringify(movies.map((movie) => {
+      if (cards.filter(card => card.owner === user._id).find((saved) => movie.id === saved.id)) {
+        return { ...movie, liked: true }
+      } else return movie
     }
-  
+    )));
+  }
+
   React.useEffect(() => {
     if (loggedIn) {
       Promise.all([
@@ -398,14 +399,13 @@ function App() {
           console.log(user);
           setCurrentUser(user);
           setSavedCards(cards.filter(card => card.owner === user._id));
-          handleLikedCards([user, cards]);
+          handleSearchLikedCards([user, cards]);
         })
         .catch((err) => {
           console.log(err);
         })
     }
   }, [loggedIn])
-  
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -434,6 +434,7 @@ function App() {
               </ProtectedRoute>}
             />
             <Route exact path="/saved-movies" element={
+              <ProtectedRoute loggedIn={loggedIn}>
               <SavedMovies
                 cards={checkedSaved ? shortSavedMovie : savedCards}
                 limit={limit}
@@ -446,9 +447,13 @@ function App() {
                 onDeleteClick={handleDeleteMovie}
                 load={load}
                 errorInput={errorInputSaved}
-              />}
+              />
+              </ProtectedRoute>}
             />
-            <Route exact path="/profile" element={<Profile onLogout={handleLogout} onEditProfile={handleUpdateUser} onInfoTooltip={infoTooltip} infoTooltipOpen={infoTooltipOpen} />} />
+            <Route exact path="/profile" element={
+            <ProtectedRoute loggedIn={loggedIn}>
+            <Profile onLogout={handleLogout} onEditProfile={handleUpdateUser} onInfoTooltip={infoTooltip} infoTooltipOpen={infoTooltipOpen} />
+            </ProtectedRoute>} />
             <Route exact path="/sign-up" element={<Register onRegister={handleRegister} onInfoTooltip={infoTooltip} infoTooltipOpen={infoTooltipOpen} />} />
             <Route exact path="/sign-in" element={<Login onLogin={handleLogin} onInfoTooltip={infoTooltip} infoTooltipOpen={infoTooltipOpen} />} />
             <Route exact path="*" element={<PageNotFound />} />
