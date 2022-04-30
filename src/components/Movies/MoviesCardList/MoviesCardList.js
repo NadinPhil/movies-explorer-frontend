@@ -5,9 +5,9 @@ import Preloader from '../Preloader/Preloader';
 import MoreMoviesCard from '../MoreMoviesCard/MoreMoviesCard';
 
 const MoviesCardList = (props) => {
-
-    const classError = `movies-cards__error${props.error ? '_active' : ''}`
     
+    const classError = `movies-cards__error${props.error ? '_active' : ''}`
+
     return (
         <section className="movies-cards">
             <Preloader load={props.load} />

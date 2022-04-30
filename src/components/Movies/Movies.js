@@ -6,7 +6,7 @@ import Footer from '../Footer/Footer';
 //import MoreMoviesCard from './MoreMoviesCard/MoreMoviesCard';
 
 function Movies(props) {
-    
+
     return (
         <>
             <section className="movies">
