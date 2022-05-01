@@ -7,9 +7,12 @@ position: relative;
 }
 
 .elements-grid__text {
+    width: 70%;
+    height: 65px;
     margin-left: 14px;
     margin-bottom: 14px;
 }
+
 
 .elements-grid__title {
     font-weight: 500;

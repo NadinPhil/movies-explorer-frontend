@@ -1,68 +1,37 @@
 import React from 'react'
-import { initialMovies } from '../../../utils/array'
 import './MoviesCardList.css'
 import MoviesCard from '../MoviesCard/MoviesCard';
-import { useState, useEffect } from "react";
+import Preloader from '../Preloader/Preloader';
+import MoreMoviesCard from '../MoreMoviesCard/MoreMoviesCard';
 
-const MoviesCardList = () => {
+const MoviesCardList = (props) => {
+    
+    const classError = `movies-cards__error${props.error ? '_active' : ''}`
 
-    const size = useWindowSize();
-
-    function useWindowSize() {
-        const [windowSize, setWindowSize] = useState(undefined);
-        useEffect(() => {
-          function handleResize() {
-            setWindowSize(window.innerWidth);
-          }
-          window.addEventListener("resize", handleResize);
-          handleResize();
-          return () => window.removeEventListener("resize", handleResize);
-        }, []); 
-        return windowSize;
-    }
     return (
         <section className="movies-cards">
+            <Preloader load={props.load} />
+            <p className={classError}>Ничего не найдено</p>
             <ul className="movies-list">
-               {size > 880 &&
-               (initialMovies.slice(0,12).map(movie => {
-                    return (
-                        <MoviesCard
-                            movieName={movie.name}
-                            movieLink={movie.link.img}
-                            movieTime={movie.time}
-                            movie={movie}
-                            movieLiked={movie.like}
-                        />
-                    )
-                }))}
-                
-                { size > 600 && size <= 880 && (
-                initialMovies.slice(0,8).map(movie => {
-                    return (
-                        <MoviesCard
-                            movieName={movie.name}
-                            movieLink={movie.link.img}
-                            movieTime={movie.time}
-                            movie={movie}
-                            movieLiked={movie.like}
-                        />
-                    )
-                })
-            )}
-            { size <= 600  && (
-                initialMovies.slice(0,5).map(movie => {
-                    return (
-                        <MoviesCard
-                            movieName={movie.name}
-                            movieLink={movie.link.img}
-                            movieTime={movie.time}
-                            movie={movie}
-                            movieLiked={movie.like}
-                        />
-                    )
-                })
-            )}
+                {props.cards.slice(0, props.limit).map(movie => {
+                        return (
+                            <MoviesCard
+                                key={movie.id}
+                                movieName={movie.nameRU}
+                                movieLink={movie.image.url}
+                                movieImg={movie.image}
+                                movieTime={movie.duration}
+                                movie={movie}
+                                movieVideo={movie.trailerLink}
+                                onLikedClick={props.onLikedClick}
+                                liked={props.liked}
+                                location={props.location}
+                                onDeleteClick={props.onDeleteClick}
+                            />
+                        )
+                    })}
             </ul>
+            <MoreMoviesCard location={props.location} loadMore={props.loadMore} onClick={props.onClick} />
         </section>
     )
 };

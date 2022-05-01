@@ -106,6 +106,25 @@
 .login__link {
     height: 100%;
     width: 100%;
+    background: #A0A0A0;;
+    border-radius: 3px;
+    font-family: 'Inter';
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    color: #FFFFFF;
+}
+@media (max-width: 450px) {
+    .login__link {
+        font-size: 12px;
+        line-height: 15px;
+    }
+}
+
+.login__link_active {
+    height: 100%;
+    width: 100%;
     background: #000000;
     border-radius: 3px;
     font-family: 'Inter';
@@ -118,7 +137,7 @@
 }
 
 @media (max-width: 450px) {
-    .login__link {
+    .login__link_active {
         font-size: 12px;
         line-height: 15px;
     }
@@ -151,4 +170,16 @@
 .login__login-link {
     color: #000000;
     text-decoration: none;
+}
+
+.login__info{
+    display: none;
+}
+
+.login__info_active{
+    font-family: 'Inter';
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    color: #FF4062;
 }

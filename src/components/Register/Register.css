@@ -104,6 +104,25 @@
 .register__link {
     height: 100%;
     width: 100%;
+    background: #A0A0A0;
+    border-radius: 3px;
+    font-family: 'Inter';
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    color: #FFFFFF;
+}
+@media (max-width: 450px) {
+    .register__link {
+        font-size: 12px;
+        line-height: 15px;
+    }
+}
+
+.register__link_active {
+    height: 100%;
+    width: 100%;
     background: #000000;
     border-radius: 3px;
     font-family: 'Inter';
@@ -116,7 +135,7 @@
 }
 
 @media (max-width: 450px) {
-    .register__link {
+    .register__link_active {
         font-size: 12px;
         line-height: 15px;
     }
@@ -149,4 +168,23 @@
 .register__login-link {
     color: #000000;
     text-decoration: none;
+}
+.error {
+    font-family: 'Inter';
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 12px;
+    color: #FF4062;
+}
+
+.register__info{
+    display: none;
+}
+
+.register__info_active{
+    font-family: 'Inter';
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    color: #FF4062;
 }
